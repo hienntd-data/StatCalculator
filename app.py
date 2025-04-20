@@ -7,12 +7,25 @@ from stat_calculator import StatCalculator
 from result_window import ResultWindow
 from constants import stats
 
+import sys
+import os
+
+def resource_path(relative_path):
+    
+    try:
+        base_path = sys._MEIPASS  
+    except Exception:
+        base_path = os.path.abspath(".")  
+
+    return os.path.join(base_path, relative_path)
+
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("Stat Calculator")
+        self.title("Stat Calculator for CMDF")
         self.geometry("1120x600")
         self.resizable(False, False)
+        self.iconbitmap(resource_path("icon.ico"))
         
         ctk.set_appearance_mode("Dark")
         self.configure(fg_color=ColorConfig.FG)
@@ -39,7 +52,7 @@ class App(ctk.CTk):
 
         # Define fonts
         self.chinese_label_font = ctk.CTkFont(family="DengXian", size=13, weight="bold")
-        self.label_font = ctk.CTkFont(family="Poppins", size=15)
+        self.label_font = ctk.CTkFont(family="Poppins", size=13)
         self.entry_font = ctk.CTkFont(family="Poppins", size=13)
         self.desc_font = ctk.CTkFont(family="Poppins", size=13)
         self.button_font = ctk.CTkFont(family="Poppins", size=13)
@@ -170,7 +183,7 @@ class App(ctk.CTk):
         self.side_1_frame = ctk.CTkFrame(tab_frame, corner_radius=10, fg_color=ColorConfig.SECONDARY_FG)
         self.side_1_frame.grid(row=0, column=0, padx=(10, 5), pady=10, sticky="nsew")
 
-        title = ctk.CTkLabel(self.side_1_frame, text="Stat Selection", font=(self.label_font, 16, "bold"), text_color=ColorConfig.ACCENT)
+        title = ctk.CTkLabel(self.side_1_frame, text="Stat Selection", font=(self.label_font, 13), text_color=ColorConfig.ACCENT)
         title.grid(row=0, column=0, pady=(10, 0), padx=10)
         desc = ctk.CTkLabel(self.side_1_frame, text="Choose stats to calculate from the list below.", font=self.entry_font, text_color=ColorConfig.TEXT)
         desc.grid(row=1, column=0, pady=(0, 5), padx=10)
@@ -207,7 +220,7 @@ class App(ctk.CTk):
         self.side_2_frame = ctk.CTkScrollableFrame(tab_frame, corner_radius=10, fg_color=ColorConfig.SECONDARY_FG)
         self.side_2_frame.grid(row=0, column=1, padx=(10, 5), pady=10, sticky="nsew")
 
-        self.title_item = ctk.CTkLabel(self.side_2_frame, text="Item Stats", font=(self.label_font, 16, "bold"), text_color=ColorConfig.ACCENT)
+        self.title_item = ctk.CTkLabel(self.side_2_frame, text="Item Stats", font=(self.label_font, 13), text_color=ColorConfig.ACCENT)
         self.title_item.grid(row=0, column=0, columnspan=3, pady=(0, 2), padx=10)
         self.desc_item = ctk.CTkLabel(self.side_2_frame, text="Enter stats for your item or load from database.", font=self.entry_font, text_color=ColorConfig.TEXT)
         self.desc_item.grid(row=1, column=0, columnspan=3, pady=(0, 2), padx=10)
@@ -226,7 +239,7 @@ class App(ctk.CTk):
         self.side_3_frame = ctk.CTkScrollableFrame(tab_frame, corner_radius=10, fg_color=ColorConfig.SECONDARY_FG)
         self.side_3_frame.grid(row=0, column=2, padx=(5, 10), pady=10, sticky="nsew")
 
-        title_char = ctk.CTkLabel(self.side_3_frame, text="Character Stats", font=self.label_font, text_color=ColorConfig.ACCENT)
+        title_char = ctk.CTkLabel(self.side_3_frame, text="Character Stats", font=(self.label_font, 13), text_color=ColorConfig.ACCENT)
         title_char.grid(row=0, column=0, columnspan=3, pady=(0, 2), padx=10)
         desc_char = ctk.CTkLabel(self.side_3_frame, text="Enter stats for your character or load from database.", font=self.entry_font, text_color=ColorConfig.TEXT)
         desc_char.grid(row=1, column=0, columnspan=3, pady=(0, 2), padx=10)
@@ -286,10 +299,10 @@ class App(ctk.CTk):
         self.critical_frame.grid_columnconfigure(1, weight=1)
         self.critical_frame.grid_rowconfigure((0, 1, 2, 3, 4), weight=1)
 
-        critical_title = ctk.CTkLabel(self.critical_frame, text="Critical Damage", font=(self.label_font, 16, "bold"), text_color=ColorConfig.ACCENT, anchor="center")
+        critical_title = ctk.CTkLabel(self.critical_frame, text="Critical Damage", font=(self.label_font, 13), text_color=ColorConfig.ACCENT, anchor="center")
         critical_title.grid(row=0, column=0, columnspan=2, pady=(20, 10), padx=10, sticky="ew")
 
-        base_damage_label = ctk.CTkLabel(self.critical_frame, text="Base Damage", font=self.entry_font, text_color=ColorConfig.TEXT)
+        base_damage_label = ctk.CTkLabel(self.critical_frame, text="Base Damage", font=self.label_font, text_color=ColorConfig.TEXT)
         base_damage_label.grid(row=1, column=0, padx=(20, 10), pady=10, sticky="w")
         self.base_damage_entry = ctk.CTkEntry(self.critical_frame, width=140, placeholder_text="e.g., 100",
                                             font=self.entry_font, fg_color=ColorConfig.SECONDARY_FG, text_color=ColorConfig.TEXT, corner_radius=15)
@@ -297,7 +310,7 @@ class App(ctk.CTk):
         self.base_damage_entry.bind("<FocusIn>", lambda e: self.base_damage_entry.configure(border_color=ColorConfig.BORDER_FOCUS))
         self.base_damage_entry.bind("<FocusOut>", lambda e:self.base_damage_entry.configure(border_color=ColorConfig.BORDER_DEFAULT))
 
-        crit_bonus_label = ctk.CTkLabel(self.critical_frame, text="Critical Bonus (%)", font=self.entry_font, text_color=ColorConfig.TEXT)
+        crit_bonus_label = ctk.CTkLabel(self.critical_frame, text="Critical Bonus (%)", font=self.label_font, text_color=ColorConfig.TEXT)
         crit_bonus_label.grid(row=2, column=0, padx=(20, 10), pady=10, sticky="w")
         self.crit_bonus_entry = ctk.CTkEntry(self.critical_frame, width=140, placeholder_text="e.g., 20",
                                             font=self.entry_font, fg_color=ColorConfig.SECONDARY_FG, text_color=ColorConfig.TEXT, corner_radius=15)
@@ -305,7 +318,7 @@ class App(ctk.CTk):
         self.crit_bonus_entry.bind("<FocusIn>", lambda e: self.crit_bonus_entry.configure(border_color=ColorConfig.BORDER_FOCUS))
         self.crit_bonus_entry.bind("<FocusOut>", lambda e:self.crit_bonus_entry.configure(border_color=ColorConfig.BORDER_DEFAULT))
 
-        crit_result_label = ctk.CTkLabel(self.critical_frame, text="Result", font=self.entry_font, text_color=ColorConfig.TEXT)
+        crit_result_label = ctk.CTkLabel(self.critical_frame, text="Result", font=self.label_font, text_color=ColorConfig.TEXT)
         crit_result_label.grid(row=3, column=0, padx=(20, 10), pady=10, sticky="w")
         self.crit_result_entry = ctk.CTkEntry(self.critical_frame, width=140, placeholder_text="N/A", state="disabled",
                                             font=self.entry_font, fg_color=ColorConfig.SECONDARY_FG, text_color=ColorConfig.TEXT, corner_radius=15)
@@ -329,10 +342,10 @@ class App(ctk.CTk):
         self.damage_frame.grid_columnconfigure(1, weight=1)
         self.damage_frame.grid_rowconfigure((0, 1, 2, 3, 4), weight=1)
 
-        damage_title = ctk.CTkLabel(self.damage_frame, text="Damage Difference", font=(self.label_font, 16, "bold"), text_color=ColorConfig.ACCENT, anchor="center")
+        damage_title = ctk.CTkLabel(self.damage_frame, text="Damage Difference", font=(self.label_font, 13), text_color=ColorConfig.ACCENT, anchor="center")
         damage_title.grid(row=0, column=0, columnspan=2, pady=(20, 10), padx=10, sticky="ew")
 
-        damage_item1_label = ctk.CTkLabel(self.damage_frame, text="Damage Item 1", font=self.entry_font, text_color=ColorConfig.TEXT)
+        damage_item1_label = ctk.CTkLabel(self.damage_frame, text="Damage Item 1", font=self.label_font, text_color=ColorConfig.TEXT)
         damage_item1_label.grid(row=1, column=0, padx=(20, 10), pady=10, sticky="w")  
         self.damage_item1_entry = ctk.CTkEntry(self.damage_frame, width=140, placeholder_text="e.g., 120",
                                             font=self.entry_font, fg_color=ColorConfig.SECONDARY_FG, text_color=ColorConfig.TEXT, corner_radius=15)
@@ -340,7 +353,7 @@ class App(ctk.CTk):
         self.damage_item1_entry.bind("<FocusIn>", lambda e: self.damage_item1_entry.configure(border_color=ColorConfig.BORDER_FOCUS))
         self.damage_item1_entry.bind("<FocusOut>", lambda e:self.damage_item1_entry.configure(border_color=ColorConfig.BORDER_DEFAULT))
 
-        damage_item2_label = ctk.CTkLabel(self.damage_frame, text="Damage Item 2", font=self.entry_font, text_color=ColorConfig.LABEL_TEXT)
+        damage_item2_label = ctk.CTkLabel(self.damage_frame, text="Damage Item 2", font=self.label_font, text_color=ColorConfig.TEXT)
         damage_item2_label.grid(row=2, column=0, padx=(20, 10), pady=10, sticky="w")
         self.damage_item2_entry = ctk.CTkEntry(self.damage_frame, width=140, placeholder_text="e.g., 100",
                                             font=self.entry_font, fg_color=ColorConfig.SECONDARY_FG, text_color=ColorConfig.TEXT, corner_radius=15)
@@ -349,7 +362,7 @@ class App(ctk.CTk):
         self.damage_item2_entry.bind("<FocusOut>", lambda e:self.damage_item2_entry.configure(border_color=ColorConfig.BORDER_DEFAULT))
         
 
-        damage_diff_label = ctk.CTkLabel(self.damage_frame, text="Difference (%)", font=self.entry_font, text_color=ColorConfig.LABEL_TEXT)
+        damage_diff_label = ctk.CTkLabel(self.damage_frame, text="Difference (%)", font=self.label_font, text_color=ColorConfig.TEXT)
         damage_diff_label.grid(row=3, column=0, padx=(20, 10), pady=10, sticky="w")
         self.damage_diff_entry = ctk.CTkEntry(self.damage_frame, width=140, placeholder_text="N/A", state="disabled",
                                             font=self.entry_font, fg_color=ColorConfig.SECONDARY_FG, text_color=ColorConfig.TEXT, corner_radius=15)
@@ -609,31 +622,41 @@ class App(ctk.CTk):
     def update_labels(self):
         if not self.winfo_exists():
             return
+        # Update stat name labels (item_stat_labels and character_stat_labels)
         for i, stat in enumerate(self.selected_stats):
             _, cn_stat, en_stat = next((l, c, e) for l, c, e in stats if l == stat)
             display_stat = cn_stat if self.current_language == "zh-cn" else en_stat
-            
-            
-            self.item_stat_labels[i].configure(text=display_stat, font=self.chinese_label_font if self.current_language == "zh-cn" else self.entry_font)
-            self.character_stat_labels[i].configure(text=display_stat, font=self.chinese_label_font if self.current_language == "zh-cn" else self.entry_font)
+            # Only stat name labels use Chinese font when language is zh-cn
+            self.item_stat_labels[i].configure(
+                text=display_stat,
+                font=self.chinese_label_font if self.current_language == "zh-cn" else self.entry_font
+            )
+            self.character_stat_labels[i].configure(
+                text=display_stat,
+                font=self.chinese_label_font if self.current_language == "zh-cn" else self.entry_font
+            )
 
+        # Update other widgets, always using English fonts
         for frame in [self.side_1_frame, self.side_2_frame, self.side_3_frame, self.side_4_frame, self.critical_frame, self.damage_frame]:
             for widget in frame.winfo_children():
                 if isinstance(widget, ctk.CTkLabel):
                     text = widget.cget("text")
-
+                    # Title labels (e.g., "Stat Selection", "Item Stats")
                     if text in ("Stat Selection", "Item Stats", "Character Stats", "Critical Damage", "Damage Difference"):
                         widget.configure(font=self.label_font)
+                    # Description labels
                     elif text in (
                         "Enter stats for your item or load from database.",
                         "Choose stats to calculate from the list below.",
                         "Enter stats for your character or load from database."
                     ):
                         widget.configure(font=self.desc_font)
+                    # Status label
                     elif text == self.status_label.cget("text"):
                         widget.configure(font=self.desc_font)
+                    # Other labels (e.g., "Base Damage", "Result") use entry_font
                     else:
-                        widget.configure(font=self.chinese_label_font if self.current_language == "zh-cn" else self.entry_font)
+                        widget.configure(font=self.entry_font)
                 elif isinstance(widget, ctk.CTkButton):
                     widget.configure(font=self.button_font)
                 elif isinstance(widget, ctk.CTkEntry):
