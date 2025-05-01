@@ -21,5 +21,36 @@ stats = [
     ("火属性抗性 (Fire Resistance)", "火属性抗性", "Fire Resistance"),
     ("冰属性抗性 (Ice Resistance)", "冰属性抗性", "Ice Resistance"),
     ("光属性抗性 (Light Resistance)", "光属性抗性", "Light Resistance"),
-    ("暗属性抗性 (Dark Resistance)", "暗属性抗性", "Dark Resistance")
+    ("暗属性抗性 (Dark Resistance)", "暗属性抗性", "Dark Resistance"),
+    ("Damage Increase", "增伤", "Damage Increase"),
+    ("Critical Damage", "暴击伤害", "Critical Damage"),
+    ("Physical Critical Hit Rate", "物理暴击率", "Physical Critical Hit Rate"),
+    ("Magical Critical Hit Rate", "魔法暴击率", "Magical Critical Hit Rate"),
+    ("Hit", "命中", "Hit"),
+    ("Hit Rate", "命中率", "Hit Rate"),
+]
+
+character_classes = [
+    "All",
+    "Ghost Knight (M): Weapon Master",
+    "Ghost Knight (M): SoulBringer",
+    "Ghost Knight (M): Asura",
+    "Ghost Knight (M): Berserker",
+    "Ghost Knight (F): Sword Master",
+    "Ghost Knight (F): Demon Slayer",
+    "Ghost Knight (F): Dark Templar",
+    "Ghost Knight (F): Vagabond",
+    "Fighter (F): Nenmaster",
+    "Fighter (F): Striker",
+    "Gunner (M): Ranger",
+    "Gunner (M): Launcher",
+    "Gunner (M): Mechanic",
+    "Gunner (M): Spitfire",
+    "Mage (F): Elementalist",
+    "Mage (F): Witch",
+    "Priest (F): Crusader",
+    "Priest (F): Inquisitor",
+    "Priest (F): Mistress",
+    "Priest (F): Miko",
+    "Priest (F): Infighter"
 ]

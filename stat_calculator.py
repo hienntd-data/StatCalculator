@@ -151,5 +151,26 @@ class StatCalculator:
         except ValueError:
             return "Invalid input"
 
+    def search_items(self, selected_stats, selected_class):
+        matched_items = []
+        
+        # Duyệt qua tất cả vật phẩm trong cơ sở dữ liệu
+        for item_index, item_data in self.parent.database["items"].items():
+            # Lấy class của vật phẩm, mặc định là "All" nếu không có
+            item_class = item_data.get("class", "All")
+            
+            # Kiểm tra class trước: chỉ tiếp tục nếu class hợp lệ
+            if selected_class != "All" and item_class != "All" and selected_class != item_class:
+                continue  # Bỏ qua vật phẩm nếu class không khớp
+            
+            # Lấy stats của vật phẩm
+            item_stats = item_data.get("stats", {})
+            
+            # Kiểm tra xem tất cả selected_stats có trong item_stats không
+            if all(stat in item_stats for stat in selected_stats):
+                matched_items.append((item_index, item_data))
+        
+        return matched_items
+
     _split_item_value = re.compile(r'\+').split
     _extract_percentage = re.compile(r'(\d+\.?\d*)%')
